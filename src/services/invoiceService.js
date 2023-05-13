@@ -1,35 +1,29 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8080/api/invoices';
+const http = axios.create({
+    baseURL : 'http://localhost:8080/api/invoices',
+    headers: { 'Content-Type': 'application/json' },
+})
 
-const getAllInvoices = () => {
-    return axios.get(baseUrl).then((response) => response.data);
-};
+const InvoiceService = () => {
+    const getAllInvoices = async() => {
+        return await http.get("/");
+    }
 
-const createInvoice = (newInvoice) => {
-    return axios.post(baseUrl, newInvoice).then((response) => response.data);
-};
+    const getInvoiceById = async (id) => {
+        return await http.get(`/${id}`);
+    }
 
-const updateInvoice = (id, updatedInvoice) => {
-    return axios
-        .put(`${baseUrl}/${id}`, updatedInvoice)
-        .then((response) => response.data);
-};
+    const createInvoice = async (model) => {
+        return await http.post("/",model);
+    }
 
-const deleteInvoice = (id) => {
-    return axios.delete(`${baseUrl}/${id}`).then((response) => response.data);
-};
+    const updateInvoice = async (id,model) => {
+        return await http.put(`/${id}`,model)
+    }
 
-const getInvoiceById = (id) => {
-    return axios.get(`${baseUrl}/${id}`).then((response) => response.data);
-};
-
-const invoiceService = {
-    getAllInvoices,
-    createInvoice,
-    updateInvoice,
-    deleteInvoice,
-    getInvoiceById,
-};
-
-export default invoiceService;
+    const deleteInvoice = async (id) => {
+        return await http.delete(id);
+    }
+}
+export default InvoiceService;

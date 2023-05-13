@@ -1,28 +1,29 @@
 import axios from 'axios';
 
-const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api/',
-});
+const http = axios.create({
+    baseURL : 'http://localhost:8080/api/customers',
+    headers: { 'Content-Type': 'application/json' },
+})
 
-const CustomerService = {
-    async getAllCustomers() {
-        return await apiClient.get('/customers').then(response => response.data);
-    },
+function CustomerService () {
+    const getAllCustomers = async() => {
+        return await http.get("/");
+    }
 
-   async getCustomerById(id) {
-        return await apiClient.get(`/customers/${id}`);
-    },
+    const getCustomerById = async (id) => {
+        return await http.get(`/${id}`);
+    }
 
-   async createCustomer(customer) {
-        return await apiClient.post('/customers', customer);
-    },
+    const createCustomer = async (model) => {
+        return await http.post("/",model);
+    }
 
-   async updateCustomer(id, customer) {
-        return await apiClient.put(`/customers/${id}`, customer);
-    },
+    const updateCustomer = async (id,model) => {
+        return await http.put(`/${id}`,model)
+    }
 
-   async deleteCustomer(id) {
-        return await apiClient.delete(`/customers/${id}`);
+    const deleteCustomer = async (id) => {
+        return await http.delete(id);
     }
 };
 

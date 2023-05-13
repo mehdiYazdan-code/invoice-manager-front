@@ -1,48 +1,30 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:8080/api/addendums';
+const http = axios.create({
+    baseURL : 'http://localhost:8080/api/addendums',
+    headers: { 'Content-Type': 'application/json' },
+})
 
-const AddendumService = {
-    getAllAddendums: async () => {
-        try {
-            const response = await axios.get(baseURL);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
-    getAddendumById: async (id) => {
-        try {
-            const response = await axios.get(`${baseURL}/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
-    createAddendum: async (addendum) => {
-        try {
-            const response = await axios.post(baseURL, addendum);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
-    updateAddendum: async (id, addendum) => {
-        try {
-            const response = await axios.put(`${baseURL}/${id}`, addendum);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
-    deleteAddendum: async (id) => {
-        try {
-            const response = await axios.delete(`${baseURL}/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
+function AddendumService () {
+    const getAllAddendum = async() => {
+        return await http.get("/");
+    }
+
+    const getAddendumById = async (id) => {
+        return await http.get(`/${id}`);
+    }
+
+    const createAddendum = async (model) => {
+        return await http.post("/",model);
+    }
+
+    const updateAddendum = async (id,model) => {
+        return await http.put(`/${id}`,model)
+    }
+
+    const deleteAddendum = async (id) => {
+        return await http.delete(id);
+    }
 };
 
 export default AddendumService;

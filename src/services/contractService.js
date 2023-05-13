@@ -1,52 +1,18 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:8080/api';
+const http = axios.create({
+    baseURL: 'http://localhost:8080/api/contracts',
+    headers: {'Content-Type': 'application/json'},
+});
 
-const contractService = {
-    getAllContracts: async () => {
-        try {
-            const response = await axios.get(`${baseURL}/contracts`);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
+        export const getAllContracts = async () => await http.get("/");
 
-    getContractById: async (id) => {
-        try {
-            const response = await axios.get(`${baseURL}/contracts/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
+        export const getContractById = async id => await http.get(`/${id}`);
 
-    createContract: async (contractData) => {
-        try {
-            const response = await axios.post(`${baseURL}/contracts`, contractData);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
+        export const createContract = async model => await http.post("/", model);
 
-    updateContract: async (id, contractData) => {
-        try {
-            const response = await axios.put(`${baseURL}/contracts/${id}`, contractData);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    },
+        export const updateContract = async (id, model) => await http.put(`/${id}`, model);
 
-    deleteContract: async (id) => {
-        try {
-            const response = await axios.delete(`${baseURL}/contracts/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-};
+        export const deleteContract = async id => await http.delete(id);
 
-export default contractService;
+

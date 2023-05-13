@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import {Link, useNavigate} from 'react-router-dom';
 import "./ContractList.css"
+import {deleteContract, getAllContracts} from "../../../services/contractService";
+
+
+
+
 
 function Contracts() {
     const [contracts, setContracts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/contracts/')
-            .then(res => {
-                setContracts(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        async function loadContracts(){
+             return  getAllContracts()
+        }
+        loadContracts().then(response => setContracts(response.data))
     }, []);
 
-    const handleDelete = (id) => {
-        axios.delete(`http://localhost:8080/api/contracts/${id}`)
-            .then(res => {
-                setContracts(contracts.filter(contract => contract.id !== id));
-            })
-            .catch(err => {
-                console.log(err);
-            })
+    const handleDelete = async (id) => {
+        const response = await deleteContract(id);
+        if (response.status === 204)
+            navigate("/api/contracts")
     }
 
     return (

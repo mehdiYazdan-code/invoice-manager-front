@@ -17,6 +17,7 @@ import InvoiceList from "./components/Invoice/InvoiceList/InvoiceList";
 import InvoiceForm from "./components/Invoice/InvoiceForm/InvoiceForm";
 import InvoiceNew from "./components/Invoice/InvoiceNew/InvoiceNew";
 import "bootstrap/dist/css/bootstrap.min.css"
+import BarrelType from "./components/BarrelType/BarrelType";
 
 function ProtectedRoute({component}) {
     // const { isAuthenticated } = useAuth();
@@ -47,6 +48,7 @@ root.render(
                   <Route path="/invoices"  element={<ProtectedRoute component={<InvoiceList />} />} />
                   <Route path="/invoices/:invoiceId" element={<ProtectedRoute component={<InvoiceForm />} />} />
                   <Route path="/invoices/create" element={<ProtectedRoute component={<InvoiceNew />} />} />
+                  <Route path="/barrel-types" element={<ProtectedRoute component={<BarrelType />} />} />
               </Route>
               {/*<Route  path="/login" element={<SignIn/>} />*/}
           </Routes>

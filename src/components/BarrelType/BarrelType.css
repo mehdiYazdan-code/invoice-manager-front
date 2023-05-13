@@ -1,0 +1,42 @@
+.barrel-type .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.barrel-type h2 {
+    margin-bottom: 20px;
+}
+
+.barrel-type table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.barrel-type thead tr {
+    background-color: #ccc;
+}
+
+.barrel-type th,
+.barrel-type td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.barrel-type td input {
+    width: 100%;
+    padding: 5px;
+}
+
+.barrel-type td button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.barrel-type td button:hover {
+    background-color: #0062cc;
+}
