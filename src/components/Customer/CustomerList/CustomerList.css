@@ -1,0 +1,41 @@
+/* table styles */
+.customer-list table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.customer-list thead {
+    background-color: #f2f2f2;
+}
+
+.customer-list th {
+    text-align: left;
+    padding: 0.5rem;
+}
+
+.customer-list td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+/* button styles */
+.customer-list button {
+    background-color: #0077cc;
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.customer-list button:hover {
+    background-color: #005ea8;
+}
+
+/* header styles */
+.customer-list h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}

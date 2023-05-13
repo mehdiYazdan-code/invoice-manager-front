@@ -1,38 +1,43 @@
-.App {
-  text-align: center;
+#sidebar-wrapper {
+    height: 100vh;
+    margin-right: -15px;
+    padding-right: 15px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f5f6f7;
+    font-family: "IRANSansMedium", sans-serif;
+    font-size: larger;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#page-content-wrapper {
+    min-width: 0;
+    height: 100vh;
+    width: 100%;
+}
+#sidebar-wrapper{
+    border: 1px solid #e8e8e8;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        width: 250px;
+        border: 1px solid #e8e8e8;
+    }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    #page-content-wrapper {
+        min-width: 0;
+        width: calc(100% - 250px);
+    }
 }
-
-.App-link {
-  color: #61dafb;
+#navbar {
+    font-family: "IRANSans", sans-serif;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#navbar-brand {
+    color: whitesmoke;
+}
+#basic-nav-dropdown{
+    color: whitesmoke;
+}
+#website-link{
+    color: whitesmoke;
 }

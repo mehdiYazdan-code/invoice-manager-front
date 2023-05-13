@@ -1,0 +1,42 @@
+.contract-list table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.contract-list th,
+.contract-list td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.contract-list th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.contract-list tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.contract-list tr:hover {
+    background-color: #ddd;
+}
+
+.contract-list button {
+    margin-left: 10px;
+}
+
+.contract-list div {
+    margin-bottom: 20px;
+}
+
+.contract-list a {
+    color: #008CBA;
+    text-decoration: none;
+}
+
+.contract-list a:hover {
+    text-decoration: underline;
+}

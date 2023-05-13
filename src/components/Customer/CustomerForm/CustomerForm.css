@@ -1,0 +1,42 @@
+.customer-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.customer-form label {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.customer-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.customer-form button[type="submit"] {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.customer-form button[type="submit"]:hover {
+    background-color: #0062cc;
+}
+
+.customer-form span {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
