@@ -1,5 +1,5 @@
 import {useForm,useFieldArray} from "react-hook-form";
-import InvoiceService from "../../../services/invoiceService";
+import {updateInvoice} from "../../../services/invoiceService";
 
 
 function InvoiceForm() {
@@ -37,7 +37,7 @@ function InvoiceForm() {
         };
 
         // submit the invoice to the server
-        InvoiceService.updateInvoice(invoice.id,invoice)
+        updateInvoice(invoice.id,invoice)
             .then(response => {
                 console.log("Invoice submitted successfully:", response);
                 // handle success case here

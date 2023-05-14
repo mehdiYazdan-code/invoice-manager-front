@@ -5,26 +5,16 @@ const http = axios.create({
     headers: { 'Content-Type': 'application/json' },
 })
 
-function AddendumService () {
-    const getAllAddendum = async() => {
-        return await http.get("/");
-    }
 
-    const getAddendumById = async (id) => {
-        return await http.get(`/${id}`);
-    }
+const getAllAddendum = async () => await http.get("/");
 
-    const createAddendum = async (model) => {
-        return await http.post("/",model);
-    }
+const getAddendumById = async id => await http.get(`/${id}`);
 
-    const updateAddendum = async (id,model) => {
-        return await http.put(`/${id}`,model)
-    }
+const createAddendum = async model => await http.post("/", model);
 
-    const deleteAddendum = async (id) => {
-        return await http.delete(id);
-    }
-};
+const updateAddendum = async (id, model) => await http.put(`/${id}`, model);
 
-export default AddendumService;
+const deleteAddendum = async id => await http.delete(id);
+
+
+
