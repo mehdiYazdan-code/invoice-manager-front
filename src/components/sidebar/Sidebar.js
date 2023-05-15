@@ -17,6 +17,9 @@ const Sidebar = () => {
             <div className="row sidebar-item">
                 <Link className="link" to="/dashboard">داشبورد</Link>
             </div>
+            <div className="row sidebar-item">
+                <Link className="link" to="/playground">test</Link>
+            </div>
         </div>
     );
 };

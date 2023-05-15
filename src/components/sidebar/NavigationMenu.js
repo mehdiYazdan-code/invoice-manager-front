@@ -17,8 +17,8 @@ export default function NavigationMenu() {
             <Nav.Link as={NavLink} to="/invoices" activeClassName="active">
                 صورت حساب
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/barrel-types" activeClassName="active">
-                تعریف محصول
+            <Nav.Link as={NavLink} to="/playground" activeClassName="active">
+                تست
             </Nav.Link>
         </Nav>
     );
