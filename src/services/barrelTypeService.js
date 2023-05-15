@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const http = axios.create({
-    baseURL: 'http://localhost:8080/api/barrel-types',
+    baseURL: 'http://localhost:8080/api/barrel-types/',
     headers: {'Content-Type': 'application/json'},
 });
 
-export const getAllBarrelTypes = async () => await http.get("/");
+export const getAllBarrelTypes = async () => await http.get("/").then(response => response.data);
 
 export const getBarrelTypeById = async id => await http.get(`/${id}`);
 

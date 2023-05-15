@@ -2,14 +2,16 @@ import DatePicker, {DateObject} from "react-multi-date-picker";
 import moment from "jalali-moment";
 import "./InvoiceNew.css";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import IconAddCircleLine from "../../assets/icons/IconAddCircleLine";
 import IconDeleteOutline from "../../assets/icons/IconDeleteOutline";
 import {createInvoice, deleteInvoice} from "../../../services/invoiceService";
-import {getCustomerDropDownList} from "../../../services/dropDownService";
+import {getContractDropDownList, getCustomerDropDownList} from "../../../services/dropDownService";
 import {getAllInvoiceStatuses} from "../../../services/invoiceStatusService";
+import {getAllBarrelTypes} from "../../../services/barrelTypeService";
+import data from "bootstrap/js/src/dom/data";
 
 function toShamsi(date) {
     return moment(date, "YYYY-MM-DD").locale("fa").format("jYYYY/jMM/jDD");
@@ -34,9 +36,11 @@ const InvoiceNew = () => {
         issuedDate: new Date(),
         dueDate: new Date(),
         customerId: 0,
+        statusId: 0,
         items: [
             {
                 id: 0,
+                barrelTypeId: 0,
                 unitPrice: 0,
                 quantity: 0,
             }
@@ -58,14 +62,39 @@ const InvoiceNew = () => {
     const [dueDate, setDueDate] = useState(invoice.dueDate);
 
     const [customers, setCustomers] = useState([]);
+
+    const [contracts, setContracts] = useState([]);
+    const [contract, setContract] = useState( {
+        "id": 2,
+        "contractNumber": "1402-002",
+        "contractDescription": "تحویل 500 بشکه سبز به شرکت نفت سپاهان",
+        "totalAmount": 6250000000,
+        "totalBarrels": 500
+    },);
     const [statuses, setStatuses] = useState([]);
+    const [barrelTypes, setBarrelTypes] = useState([]);
 
 
-    const handleExplanation = (e) => {
-        setInvoice({...invoice, "explanation": e.target.value})
+    const handleContractId = (e) => {
+        setInvoice({...invoice, "contractId": e.target.value});
+        setContract(contracts.filter(c => c.id === invoice.contractId));
     }
+
+    useMemo((e) => {
+        async function loadContractDropDown(customerId){
+            return await getContractDropDownList(customerId);
+        }
+        loadContractDropDown(invoice.customerId).then(data => {
+            console.log("useCallBack: ",data)
+            setContracts(data)
+        })
+    }, [invoice.customerId]);
+
     const handleCustomerId = (e) => {
         setInvoice({...invoice, "customerId": e.target.value})
+    };
+    const handleStatusId = (e) => {
+        setInvoice({...invoice, "statusId": e.target.value})
     }
 
     const handleInputChange = (event, index) => {
@@ -88,7 +117,7 @@ const InvoiceNew = () => {
     const handleAddItem = () => {
         const newItems = [
             ...invoice.items,
-            {id: 0, unitPrice: '0', quantity: '0', amount: 0},
+            {id: 0, barrelTypeId: 0, unitPrice: '0', quantity: '0', amount: 0},
         ];
         setInvoice({...invoice, items: newItems});
     };
@@ -138,15 +167,17 @@ const InvoiceNew = () => {
         async function loader() {
             const customer_drop_down = await getCustomerDropDownList();
             const status_drop_down = await getAllInvoiceStatuses();
-            return {customer_drop_down, status_drop_down}
+            const barrel_types_drop_down = await getAllBarrelTypes();
+            const contract_drop_down = await getContractDropDownList(invoice.customerId);
+            return {customer_drop_down, status_drop_down, barrel_types_drop_down, contract_drop_down}
         }
 
         loader().then((data) => {
             setCustomers(data.customer_drop_down);
             setStatuses(data.status_drop_down);
-
+            setBarrelTypes(data.barrel_types_drop_down);
+            setContracts(data.contract_drop_down);
         })
-
     }, [])
 
 
@@ -167,93 +198,120 @@ const InvoiceNew = () => {
             </div>
             <div style={{
                 display: "flex",
-                flexDirection:"column",
+                flexDirection: "column",
                 marginTop: "5px",
                 border: "1px solid lightgray",
                 borderRadius: "5px",
-                height: "120px",
+                height: "200px",
                 width: "100%",
                 padding: "10px"
             }}
             >
-                <div  style={{display : "flex"}}>
-                    <div style={{margin: "0 5px"}}>
-                        <label htmlFor="issuedDate">تاریخ صدور:</label>
-                        <DatePicker
-                            id="issuedDate"
-                            name="issuedDate"
-                            type="text"
-                            format="YYYY/MM/DD"
-                            calendar={persian}
-                            locale={persian_fa}
-                            value={toShamsi(issuedDate)}
-                            onChange={handleIssuedDateChange}
-                            className="custom-datepicker"
-                            inputClass="custom-datepicker-input"
-                            calendarClass="custom-datepicker-calendar"
-                        />
+                <div style={{display: "flex", flexDirection: "column"}}>
+                    <div style={{display: "flex"}}>
+                        <div style={{margin: "0 5px"}}>
+                            <label htmlFor="issuedDate">تاریخ صدور:</label>
+                            <DatePicker
+                                id="issuedDate"
+                                name="issuedDate"
+                                type="text"
+                                format="YYYY/MM/DD"
+                                calendar={persian}
+                                locale={persian_fa}
+                                value={toShamsi(issuedDate)}
+                                onChange={handleIssuedDateChange}
+                                className="custom-datepicker"
+                                inputClass="custom-datepicker-input"
+                                calendarClass="custom-datepicker-calendar"
+                            />
+                        </div>
+                        <div style={{margin: "0 5px"}}>
+                            <label htmlFor="issuedDate">تاریخ تسویه:</label>
+                            <DatePicker
+                                id="issuedDate"
+                                name="issuedDate"
+                                type="text"
+                                format="YYYY/MM/DD"
+                                calendar={persian}
+                                locale={persian_fa}
+                                value={toShamsi(issuedDate)}
+                                onChange={handleDueDateChange}
+                                className="custom-datepicker"
+                                inputClass="custom-datepicker-input"
+                                calendarClass="custom-datepicker-calendar"
+                            />
+                        </div>
+                        <div style={{margin: "0 5px", width: "300px"}}>
+                            <label htmlFor="statusId">وضعیت:</label>
+                            <select
+                                type="select"
+                                id="statusId"
+                                name="statusId"
+                                value={invoice.statusId}
+                                onChange={handleStatusId}
+                                required
+                            >
+                                {statuses.map(status => <option value={status.id}>{status.name}</option>)}
+                            </select>
+                        </div>
+                        <div style={{margin: "0 5px", width: "300px"}}>
+                            <label htmlFor="customerId">کارفرما:</label>
+                            <select
+                                type="select"
+                                id="customerId"
+                                name="customerId"
+                                value={invoice.customerId}
+                                onChange={handleCustomerId}
+                                required
+                            >
+                                {(invoice.customerId === 0 || invoice.customerId == null) && <option value={0}>انتخاب...</option>}
+                                {customers.map(customer => <option value={customer.id}>{customer.name}</option>)}
+                            </select>
+                        </div>
                     </div>
-                    <div style={{margin: "0 5px"}}>
-                        <label htmlFor="issuedDate">تاریخ تسویه:</label>
-                        <DatePicker
-                            id="issuedDate"
-                            name="issuedDate"
-                            type="text"
-                            format="YYYY/MM/DD"
-                            calendar={persian}
-                            locale={persian_fa}
-                            value={toShamsi(issuedDate)}
-                            onChange={handleDueDateChange}
-                            className="custom-datepicker"
-                            inputClass="custom-datepicker-input"
-                            calendarClass="custom-datepicker-calendar"
-                        />
-                    </div>
-                    <div style={{margin: "0 5px", width: "300px"}}>
-                        <label htmlFor="explanation">وضعیت:</label>
-                        <select
-                            type="select"
-                            id="customerId"
-                            name="customerId"
-                            value={1}
-                            onChange={handleCustomerId}
-                            required
-                        >
-                            {statuses.map(customer => <option value={customer.id}>{customer.name}</option>)}
-                        </select>
-                    </div>
-                    <div style={{margin: "0 5px", width: "300px"}}>
-                        <label htmlFor="explanation">کارفرما:</label>
-                        <select
-                            type="select"
-                            id="customerId"
-                            name="customerId"
-                            value={1}
-                            onChange={handleCustomerId}
-                            required
-                        >
-                            {customers.map(customer => <option value={customer.id}>{customer.name}</option>)}
-                        </select>
-                    </div>
-                </div>
-                <div style={{display : "flex"}}>
+                    <div style={{display: "flex"}}>
 
+                        <div style={{margin: "0 5px", width: "100%", display:"flex"}}>
+                            <div style={{margin: "0 5px", width: "100%"}}>
+                                <label htmlFor="contractId">قرارداد:</label>
+                                <select
+                                    type="select"
+                                    id="contractId"
+                                    name="contractId"
+                                    value={invoice.contractId}
+                                    onChange={handleContractId}
+                                    required
+                                >
+                                    {(!contracts) && <option value={0}>انتخاب...</option>}
+                                    {contracts.map(contract => <option value={contract.id}>{contract.contractDescription}</option>)}
+                                </select>
+                            </div>
+                            <div style={{margin: "0 5px", width: "100%"}}>
+                                <label>مبلغ کل</label>
+                                <input type="text" defaultValue={contract.totalAmount}/>
+                            </div>
+                            <div style={{margin: "0 5px", width: "100%"}}>
+                                <label>تعداد کل</label>
+                                <input type="text" defaultValue={contract.totalBarrels}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="row">
+            <div>
                 <button className="btn" onClick={handleAddItem}>
                     <IconAddCircleLine fontSize={35}/>
                 </button>
             </div>
             <div className="container-fluid">
                 <form onSubmit={handleSubmit}>
-                    <table >
+                    <table>
                         <thead>
                         <tr>
-                            <th>شرح آیتم</th>
-                            <th>قیمت واحد(ریال)</th>
-                            <th>تعداد</th>
-                            <th>مبلغ(ریال)</th>
+                            <th className="col-6">شرح آیتم</th>
+                            <th className="col">قیمت واحد(ریال)</th>
+                            <th className="col">تعداد</th>
+                            <th className="col-2">مبلغ(ریال)</th>
                             <th>عملیات</th>
                         </tr>
                         </thead>
@@ -261,7 +319,17 @@ const InvoiceNew = () => {
                         {invoice.items.map((item, index) => (
                             <tr key={item.id}>
                                 <td>
-                                    <input type="text"/>
+                                    <select
+                                        type="select"
+                                        id="barrelTypeId"
+                                        name="barrelTypeId"
+                                        value={item.barrelTypeId}
+                                        onChange={(event) => handleInputChange(event, index)}
+                                        required
+                                    >
+                                        {barrelTypes.map(barrelType => <option
+                                            value={barrelType.id}>{barrelType.name}</option>)}
+                                    </select>
                                 </td>
                                 <td>
                                     <input
