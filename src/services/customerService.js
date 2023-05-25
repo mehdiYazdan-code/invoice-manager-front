@@ -5,7 +5,7 @@ const http = axios.create({
     headers: {'Content-Type': 'application/json'},
 });
 
-export const getAllCustomers = async () => await http.get("/");
+export const getAllCustomers = async () => await http.get("/").then(response => response.data);
 
 export const getCustomerById = async id => await http.get(`/${id}`);
 

@@ -49,7 +49,7 @@ function Contracts() {
                         <td>{contract.quantity}</td>
                         <td>{contract.totalAmount}</td>
                         <td>
-                            <Link to={`/${contract.id}`}>Edit</Link> |
+                            <Link to={`${contract.id}`}>Edit</Link> |
                             <button onClick={() => handleDelete(contract.id)}>Delete</button>
                         </td>
                     </tr>

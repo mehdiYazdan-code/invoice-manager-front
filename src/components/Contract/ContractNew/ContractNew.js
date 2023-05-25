@@ -6,7 +6,24 @@ import {createContract} from "../../../services/contractService";
 
 
 function ContractNew() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues : {
+            id: "",
+            contractNumber: "",
+            contractDescription: "",
+            customerId: "",
+            unitPrice: "",
+            quantity: "",
+            barrelTypeId: "",
+            startDate: "",
+            endDate: "",
+            advancePayment: "",
+            performanceBond: "",
+            insuranceDeposit: "",
+            totalAmount: "",
+            totalBarrels: ""
+        }
+    });
 
     const navigate = useNavigate();
 
@@ -67,6 +84,11 @@ function ContractNew() {
                             ضمانتنامه:
                             <input className="form-input" type="number" {...register("performanceBond", { required: true })} />
                             {errors.performanceBond && <span>This field is required</span>}
+                        </label>
+                        <label className="form-label">
+                            ضمانتنامه:
+                            <input className="form-input" type="number" {...register("insuranceDeposit", { required: true })} />
+                            {errors.insuranceDeposit && <span>This field is required</span>}
                         </label>
                         <label className="form-label">
                             نوع بشکه:

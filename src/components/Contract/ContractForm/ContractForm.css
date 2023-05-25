@@ -1,0 +1,79 @@
+/* Form container */
+.contract-form .form-container {
+    max-width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "IRANSans", sans-serif;
+}
+
+/* Form label */
+.contract-form .form-label {
+    display:block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Form input */
+.contract-form .form-input {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.contract-form .form-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+/* Form select */
+.contract-form .form-select {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+/* Form button */
+.contract-form .form-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Form button hover */
+.contract-form .form-button:hover {
+    background-color: #0069d9;
+}
+
+/* Error message */
+.contract-form .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Success message */
+.contract-form .success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 5px;
+}

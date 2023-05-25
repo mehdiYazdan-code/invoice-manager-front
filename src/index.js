@@ -21,11 +21,11 @@ import BarrelType from "./components/BarrelType/BarrelType";
 import Invoice from "./components/playground/Invoice";
 
 function ProtectedRoute({component}) {
-    const { isAuthenticated } = useAuth();
-
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+    // const { isAuthenticated } = useAuth();
+    //
+    // if (!isAuthenticated) {
+    //     return <Navigate to="/login" replace />;
+    // }
 
     return component;
 }
@@ -52,7 +52,7 @@ root.render(
                   <Route path="/barrel-types" element={<ProtectedRoute component={<BarrelType />} />} />
                   <Route path="/playground" element={<ProtectedRoute component={<Invoice />} />} />
               </Route>
-              <Route  path="/login" element={<SignIn/>} />
+              {/*<Route  path="/login" element={<SignIn/>} />*/}
           </Routes>
       </Router>
   </React.StrictMode>
